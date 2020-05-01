@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <iomanip> 
 #include "Wektor.hh"
 #include "Macierz.hh"
 #include "UkladRownanLiniowych.hh"
@@ -19,16 +20,17 @@ int main()
   plik.open("daneZes");
   plik >> A >> B;
   cout << "Macierz:" << endl; 
-  cout << A;
+  cout << A; 
   cout << "Wektor wyrazow wolnych:" << endl;
   cout << B;
   UklRowL<LZespolona,5> Rown(A,B);
   Rozw=Rown.ObliczPiaSt();
-  cout << "Rozwiazanie x = (x1, x2, x3):" << endl;
-  cout << Rozw;
+  cout << "Rozwiazanie x = (x1, x2, x3, x4, x5):" << endl;
+  cout << fixed << setprecision(2) << Rozw;
+  WBlad=WBledu(A,B,Rozw);
+  cout << "Wektor bledu: Ax-b  =" << endl;
+  cout << scientific << setprecision(1) << WBlad << endl;
 
- 
-  
   
   cout << endl << " Konczenie dzialania programu programu " << endl << endl;
 }

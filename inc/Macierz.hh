@@ -28,31 +28,26 @@ public:
   
   TYP & operator() (int index1, int index2);
   
-  Macierz<TYP, ROZMIAR> operator +(const Macierz<TYP, ROZMIAR> & M);
+  Macierz<TYP, ROZMIAR> operator +(const Macierz<TYP, ROZMIAR> & M) const;
 
-  Macierz<TYP, ROZMIAR> operator -(const Macierz<TYP, ROZMIAR> & M);
+  Macierz<TYP, ROZMIAR> operator -(const Macierz<TYP, ROZMIAR> & M) const;
 
-  Macierz<TYP, ROZMIAR> operator *(const Macierz<TYP, ROZMIAR> & M);
+  Macierz<TYP, ROZMIAR> operator *(const Macierz<TYP, ROZMIAR> & M) const;
+
+  Wektor<TYP, ROZMIAR> operator *(const Wektor<TYP, ROZMIAR> & M) const;
   
-  Macierz<TYP, ROZMIAR> operator *(TYP mnoznik);
+  Macierz<TYP, ROZMIAR> operator *(const TYP mnoznik) const;
 
   bool operator== (const Macierz<TYP, ROZMIAR> & M) const;
   
   bool operator!= (const Macierz<TYP, ROZMIAR> & M) const;
 
   Macierz<TYP, ROZMIAR> transponuj() const;
-
-  TYP wyznacznik() const;
 };
 
-template<class TYP,int ROZMIAR>
-TYP wyznacznik3(Macierz<TYP,ROZMIAR> tab);
 
 template<class TYP,int ROZMIAR>
-TYP wyznacznik4(Macierz<TYP,ROZMIAR> tab);
-
-template<class TYP,int ROZMIAR>
-TYP wyznacznik5(Macierz<TYP,ROZMIAR> tab);
+TYP wyznacznik(const Macierz <TYP, ROZMIAR> tab,int rozmiar);
 
 template<class TYP,int ROZMIAR>
 std::ostream& operator << (std::ostream &Strm, const Macierz<TYP,ROZMIAR> &Mac);

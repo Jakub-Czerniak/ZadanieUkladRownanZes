@@ -76,9 +76,10 @@ TYP & Macierz<TYP, ROZMIAR>::operator() (int index1, int index2)
 }
 
 template<class TYP,int ROZMIAR>
-Macierz<TYP, ROZMIAR> Macierz<TYP, ROZMIAR>::operator +(const Macierz<TYP, ROZMIAR> & M)
+Macierz<TYP, ROZMIAR> Macierz<TYP, ROZMIAR>::operator +(const Macierz<TYP, ROZMIAR> & M) const
 {
   Macierz<TYP, ROZMIAR> wynik;
+
   for(int index=0;index<ROZMIAR;index++)
     {
       wynik[index]=tab[index]+M[index];
@@ -87,9 +88,10 @@ Macierz<TYP, ROZMIAR> Macierz<TYP, ROZMIAR>::operator +(const Macierz<TYP, ROZMI
 }
 
 template<class TYP,int ROZMIAR>
-Macierz<TYP, ROZMIAR> Macierz<TYP, ROZMIAR>::operator -(const Macierz<TYP, ROZMIAR> & M)
+Macierz<TYP, ROZMIAR> Macierz<TYP, ROZMIAR>::operator -(const Macierz<TYP, ROZMIAR> & M) const
 {
   Macierz<TYP, ROZMIAR> wynik;
+
   for(int index=0;index<ROZMIAR;index++)
     {
       wynik[index]=tab[index]-M[index];
@@ -98,7 +100,7 @@ Macierz<TYP, ROZMIAR> Macierz<TYP, ROZMIAR>::operator -(const Macierz<TYP, ROZMI
 }
 
 template<class TYP,int ROZMIAR>
-Macierz<TYP, ROZMIAR> Macierz<TYP, ROZMIAR>::operator *(const Macierz<TYP, ROZMIAR> & M)
+Macierz<TYP, ROZMIAR> Macierz<TYP, ROZMIAR>::operator *(const Macierz<TYP, ROZMIAR> & M) const
   {
     Macierz<TYP, ROZMIAR> wynik;
     Macierz<TYP, ROZMIAR> MPom=M;
@@ -112,9 +114,23 @@ Macierz<TYP, ROZMIAR> Macierz<TYP, ROZMIAR>::operator *(const Macierz<TYP, ROZMI
   }
 
 template<class TYP,int ROZMIAR>
-Macierz<TYP, ROZMIAR> Macierz<TYP, ROZMIAR>::operator *(TYP mnoznik)
+Wektor<TYP, ROZMIAR> Macierz<TYP, ROZMIAR>::operator *(const Wektor<TYP, ROZMIAR> & M) const
+{
+Wektor<TYP,ROZMIAR> wynik;
+
+for(int w=0;w<ROZMIAR;w++)
+    for(int k=0;k<ROZMIAR;k++)
+      wynik[w]=wynik[w]+tab[w][k]*M[k];
+      
+return wynik;
+}
+
+
+template<class TYP,int ROZMIAR>
+Macierz<TYP, ROZMIAR> Macierz<TYP, ROZMIAR>::operator *(const TYP mnoznik) const
   {
     Macierz<TYP, ROZMIAR> wynik;
+
   for(int index=0;index<ROZMIAR;index++)
     wynik[index]=tab[index]*mnoznik;
 
@@ -131,46 +147,6 @@ Macierz<TYP, ROZMIAR> Macierz<TYP, ROZMIAR>::transponuj() const
       wynik(i,k)=tab[k][i];
     
   return wynik;
-}
-
-template<class TYP,int ROZMIAR>
-TYP Macierz<TYP,ROZMIAR>::wyznacznik() const
-{
-  TYP wyzn;
-  wyzn=0.0;
-  Macierz<TYP,ROZMIAR> pomoc;
-  int pk;  
-
-
-  if(ROZMIAR==3)
-    {
-       wyzn=tab[0][0]*tab[1][1]*tab[2][2]+tab[0][1]*tab[1][2]*tab[2][0]+
-	tab[0][2]*tab[1][0]*tab[2][1]-tab[2][0]*tab[1][1]*tab[0][2]-
-	tab[2][1]*tab[1][2]*tab[0][0]-tab[2][2]*tab[1][0]*tab[0][1];
-    }
-  else
-    {
-      for(int n=0;n<ROZMIAR;n++)
-	{
-	  for(int w=1;w<ROZMIAR;w++)
-	    {
-	      pk=-1;
-	      for(int k=0; k<ROZMIAR;k++)
-		{
-		  if(k!=n)
-	       	    {
-		      pk+=1;
-       		      pomoc(w-1,pk)=tab[w][k];
-		    }
-		}
-	    }
-	  //	  wyzn=wyzn+pow(-1,n)*tab(0,n)*pomoc.wyznacznik;
-	    cout<< pomoc <<"tablica"<< endl;
-	    
-	} 
-    }
-  
-  return wyzn;
 }
 
 template<class TYP,int ROZMIAR>
@@ -215,83 +191,52 @@ std::ostream& operator << (std::ostream &Strm, const Macierz<TYP,ROZMIAR> &Mac)
 
 
 template<class TYP,int ROZMIAR>
-TYP wyznacznik3(const Macierz<TYP,ROZMIAR> tab)
+TYP wyznacznik(const Macierz <TYP, ROZMIAR> tab,int rozmiar)
 {
   TYP wyzn;
-
-  wyzn=tab(0,0)*tab(1,1)*tab(2,2)+tab(0,1)*tab(1,2)*tab(2,0)+
-    tab(0,2)*tab(1,0)*tab(2,1)-tab(2,0)*tab(1,1)*tab(0,2)-
-    tab(2,1)*tab(1,2)*tab(0,0)-tab(2,2)*tab(1,0)*tab(0,1);
-  
-  return wyzn;
-}
-
-
-template<class TYP,int ROZMIAR>
-TYP wyznacznik4(const Macierz<TYP,ROZMIAR> tab) 
-{
-  TYP wyzn;
-  wyzn=0.00;
+  wyzn=0.0;
   Macierz<TYP,ROZMIAR> pomoc;
   int pk;  
 
-  
-  for(int n=0;n<4;n++)
+
+  if(rozmiar==3)
     {
-      for(int w=1;w<4;w++)
+       wyzn=tab[0][0]*tab[1][1]*tab[2][2]+tab[0][1]*tab[1][2]*tab[2][0]+
+	tab[0][2]*tab[1][0]*tab[2][1]-tab[2][0]*tab[1][1]*tab[0][2]-
+	tab[2][1]*tab[1][2]*tab[0][0]-tab[2][2]*tab[1][0]*tab[0][1];
+    }
+  else
+    {
+      for(int n=0;n<rozmiar;n++)
+	{
+	  for(int w=1;w<rozmiar;w++)
 	    {
 	      pk=-1;
-	      for(int k=0; k<4;k++)
+	      for(int k=0; k<rozmiar;k++)
 		{
 		  if(k!=n)
 	       	    {
 		      pk+=1;
-       		      pomoc(w-1,pk)=tab(w,k);
+       		      pomoc(w-1,pk)=tab[w][k];
 		    }
 		}
 	    }
-      wyzn+=tab(0,n)*pow(-1,n)*wyznacznik3(pomoc);
+	    wyzn+=tab(0,n)*pow(-1,n)*wyznacznik(pomoc,rozmiar-1);    
+	    
+	} 
     }
-
-  return wyzn;
-}
-
-
-template<class TYP,int ROZMIAR>
-TYP wyznacznik5(const Macierz<TYP,ROZMIAR> tab)
-{
-  TYP wyzn;
-  wyzn= 0.0;
-  Macierz<TYP,ROZMIAR> pomoc;
-  int pk;
   
-   for(int n=0;n<5;n++)
-    {
-      for(int w=1;w<5;w++)
-	    {
-	      pk=-1;
-	      for(int k=0; k<5;k++)
-		{
-		  if(k!=n)
-	       	    {
-		      pk+=1;
-       		      pomoc(w-1,pk)=tab(w,k);
-		    }
-		}
-	    }
-      wyzn+=tab(0,n)*pow(-1,n)*wyznacznik4(pomoc);
-    }
   return wyzn;
 }
+
 
 
 template class Macierz<double,3>;
 template class Macierz<double,4>;
 template class Macierz<double,5>;
-template double wyznacznik5(Macierz<double,5>);
-template double wyznacznik5(Macierz<double,3>);
-template double wyznacznik4(Macierz<double,4>);
-template double wyznacznik3(Macierz<double,3>);
+template double wyznacznik(Macierz<double,3>,int rozmiar);
+template double wyznacznik(Macierz<double,4>,int rozmiar);
+template double wyznacznik(Macierz<double,5>,int rozmiar);
 template std::istream& operator >> (std::istream &Strm, Macierz<double,4> &Mac);template std::ostream& operator << (std::ostream &Strm, const Macierz<double,4> &Mac);
 template std::istream& operator >> (std::istream &Strm, Macierz<double,5> &Mac);template std::ostream& operator << (std::ostream &Strm, const Macierz<double,5> &Mac);
 template std::istream& operator >> (std::istream &Strm, Macierz<double,3> &Mac);template std::ostream& operator << (std::ostream &Strm, const Macierz<double,3> &Mac);
@@ -299,10 +244,9 @@ template std::istream& operator >> (std::istream &Strm, Macierz<double,3> &Mac);
 template class Macierz<LZespolona,3>;
 template class Macierz<LZespolona,4>;
 template class Macierz<LZespolona,5>;
-template LZespolona wyznacznik5(Macierz<LZespolona,5>);
-template LZespolona wyznacznik5(Macierz<LZespolona,3>);
-template LZespolona wyznacznik4(Macierz<LZespolona,4>);
-template LZespolona wyznacznik3(Macierz<LZespolona,3>);
+template LZespolona wyznacznik(const Macierz <LZespolona, 5> tab,int rozmiar);
+template LZespolona wyznacznik(const Macierz <LZespolona, 4> tab,int rozmiar);
+template LZespolona wyznacznik(const Macierz <LZespolona, 3> tab,int rozmiar);
 template std::istream& operator >> (std::istream &Strm, Macierz<LZespolona,4> &Mac);template std::ostream& operator << (std::ostream &Strm, const Macierz<LZespolona,4> &Mac);
 template std::istream& operator >> (std::istream &Strm, Macierz<LZespolona,5> &Mac);template std::ostream& operator << (std::ostream &Strm, const Macierz<LZespolona,5> &Mac);
 template std::istream& operator >> (std::istream &Strm, Macierz<LZespolona,3> &Mac);template std::ostream& operator << (std::ostream &Strm, const Macierz<LZespolona,3> &Mac);

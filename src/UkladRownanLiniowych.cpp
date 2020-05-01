@@ -75,12 +75,12 @@ Wektor<TYP, ROZMIAR> UklRowL<TYP, ROZMIAR>::ObliczPiaSt() const //metoda Cramera
   Mac5=Mac5.transponuj();
  
 
-  Wyz=wyznacznik5(A);
-  Wyz1=wyznacznik5(Mac1);
-  Wyz2=wyznacznik5(Mac2);
-  Wyz3=wyznacznik5(Mac3);
-  Wyz4=wyznacznik5(Mac4);
-  Wyz5=wyznacznik5(Mac5);
+  Wyz=wyznacznik(A,5);
+  Wyz1=wyznacznik(Mac1,5);
+  Wyz2=wyznacznik(Mac2,5);
+  Wyz3=wyznacznik(Mac3,5);
+  Wyz4=wyznacznik(Mac4,5);
+  Wyz5=wyznacznik(Mac5,5);
 
   
   X1=Wyz1/Wyz;
@@ -94,51 +94,13 @@ Wektor<TYP, ROZMIAR> UklRowL<TYP, ROZMIAR>::ObliczPiaSt() const //metoda Cramera
   return wynik;
 }
 
-template<class TYP,int ROZMIAR>
-Wektor<TYP, ROZMIAR> UklRowL<TYP, ROZMIAR>::Oblicz() const //metoda Cramera
-{
-  TYP Wyz, WyzX, WyzY, WyzZ;
-  TYP X, Y, Z;
-  Macierz<TYP, ROZMIAR> MacX, MacY, MacZ;
-  
-  MacX=A.transponuj();
-  MacX[0]=B;
-  MacX=MacX.transponuj();
-
-  MacY=A.transponuj();
-  MacY[1]=B;
-  MacY=MacY.transponuj();
-
-  MacZ=A.transponuj();
-  MacZ[2]=B;
-  MacZ=MacZ.transponuj();
-
-
-  Wyz=A.wyznacznik();
-  WyzX=MacX.wyznacznik();
-  WyzY=MacY.wyznacznik();
-  WyzZ=MacZ.wyznacznik();
-  
-  X=WyzX/Wyz;
-  Y=WyzY/Wyz;
-  Z=WyzZ/Wyz;
-
-  Wektor<TYP, ROZMIAR> wynik(X,Y,Z);
-  
-  return wynik;
-}
 
 template<class TYP,int ROZMIAR>
 Wektor<TYP, ROZMIAR> WBledu(Macierz<TYP, ROZMIAR> A, Wektor<TYP, ROZMIAR> B, Wektor<TYP, ROZMIAR> X)
 {
   Wektor<TYP, ROZMIAR>  wynik;
 
-  for(int w=0;w<ROZMIAR;w++)
-    for(int k=0;k<ROZMIAR;k++)
-      wynik[w]=wynik[w]+A(w,k)*X[k];
-
-  for(int w=0;w<ROZMIAR;w++)
-    wynik[w]=wynik[w]-B[w];
+wynik=A*X-B;   
   
   return wynik;
 }
@@ -168,13 +130,13 @@ std::ostream& operator << (std::ostream &strm, const UklRowL<TYP, ROZMIAR> &U)
 
   
 
-template class UklRowL<double,3>;
+
 template class UklRowL<double,5>;
+template Wektor<double, 5> WBledu(Macierz<double, 5> A, Wektor<double, 5> B, Wektor<double, 5> X);
 template std::istream &operator >> (std::istream &strm, UklRowL<double, 5> &U);
 template std::ostream& operator << (std::ostream &strm, const UklRowL<double, 5> &U);
-template Wektor<double, 3> WBledu(Macierz<double, 3> A, Wektor<double, 3> B, Wektor<double, 3> X);
 
-template class UklRowL<LZespolona,3>;
 template class UklRowL<LZespolona,5>;
+template Wektor<LZespolona, 5> WBledu(Macierz<LZespolona, 5> A, Wektor<LZespolona, 5> B, Wektor<LZespolona, 5> X);
 template std::istream &operator >> (std::istream &strm, UklRowL<LZespolona, 5> &U);
 template std::ostream& operator << (std::ostream &strm, const UklRowL<LZespolona, 5> &U);

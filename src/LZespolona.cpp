@@ -18,17 +18,20 @@ LZespolona::LZespolona(double arg1, double arg2)
 }
 
 
- void LZespolona::operator=(const double & Skl2)
+ LZespolona LZespolona::operator=(const double  Skl2)
 {
   re=Skl2;
   im=0;
+
+return *this;
 }
 
-void LZespolona::operator+=(const LZespolona & Skl2)
-  {
-    re+=Skl2.re;
-    im+=Skl2.im;
-  }
+LZespolona LZespolona::operator+=(const LZespolona & Skl2)
+{
+  re+=Skl2.re;
+  im+=Skl2.im;
+  return *this;
+}
 
 LZespolona LZespolona::operator +(const LZespolona & Skl2) const
 {

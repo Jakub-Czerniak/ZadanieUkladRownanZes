@@ -43,7 +43,7 @@ template<class TYP,int ROZMIAR>
 TYP & Wektor<TYP, ROZMIAR>::operator[] (int index)
 {
   if (index < 0 || index >= ROZMIAR) {
-    cerr << "Index poza zakresem 6" << endl;
+    cerr << "Index poza zakresem 5" << endl;
     exit(1);
   }
   return tab[index];
@@ -75,6 +75,7 @@ template<class TYP,int ROZMIAR>
 TYP Wektor<TYP, ROZMIAR>::operator* (const Wektor<TYP, ROZMIAR> & W2) const
 {
   TYP wynik;
+  wynik=0;
   for  (int index = 0 ; index<ROZMIAR ;index++)
     {
       wynik+=tab[index]*W2[index];

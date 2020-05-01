@@ -11,8 +11,8 @@ struct  LZespolona {
   LZespolona ();
   LZespolona (double arg1, double arg2);
 
-  void operator = (const double & Skl2);
-  void operator += (const LZespolona & Skl2);
+  LZespolona operator = (const double Skl2);
+  LZespolona operator += (const LZespolona & Skl2);
   LZespolona  operator + (const LZespolona & Skl2)const;
   LZespolona  operator - (const LZespolona & Skl2)const;
   LZespolona  operator *(const LZespolona & Skl2)const;

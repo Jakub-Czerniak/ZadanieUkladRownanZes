@@ -28,7 +28,7 @@ class UklRowL {
 
   void set_B(const Wektor<TYP, ROZMIAR> BB);
 
-  Wektor<TYP, ROZMIAR> Oblicz() const;
+ /* Wektor<TYP, ROZMIAR> Oblicz() const;*/
 
   Wektor<TYP, ROZMIAR> ObliczPiaSt() const;
 };
