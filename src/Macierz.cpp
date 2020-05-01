@@ -36,7 +36,7 @@ const Wektor<TYP, ROZMIAR> & Macierz<TYP, ROZMIAR>::operator[] (int index) const
 {
   if (index < 0 || index >= ROZMIAR)
     {
-       cerr << "Index poza zakresem 1" << endl;
+       cerr << "Index poza zakresem" << endl;
        exit(1);
     }
   return tab[index];  
@@ -47,7 +47,7 @@ Wektor<TYP, ROZMIAR> & Macierz<TYP, ROZMIAR>::operator[] (int index)
 {
   if (index < 0 || index >= ROZMIAR)
     {
-      cerr << "Index poza zakresem 2" << endl;
+      cerr << "Index poza zakresem" << endl;
       exit(1);
     }
   return tab[index];
@@ -58,7 +58,7 @@ const TYP & Macierz<TYP, ROZMIAR>::operator() (int index1, int index2) const
 {
   if (index1 < 0 || index1 >= ROZMIAR || index2 < 0 || index2 >= ROZMIAR)
     {
-      cerr << "Index poza zakresem 3" << endl;
+      cerr << "Index poza zakresem" << endl;
       exit(1);
     }
   return tab[index1][index2];
@@ -69,7 +69,7 @@ TYP & Macierz<TYP, ROZMIAR>::operator() (int index1, int index2)
 {
   if (index1 < 0 || index1 >= ROZMIAR || index2 < 0 || index2 >= ROZMIAR)
     {
-      cerr << "Indeks poza zakresem 4" << endl;
+      cerr << "Indeks poza zakresem" << endl;
       exit(1);
     }
   return tab[index1][index2];

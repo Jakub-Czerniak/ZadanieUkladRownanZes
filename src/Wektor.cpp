@@ -33,7 +33,7 @@ template<class TYP,int ROZMIAR>
 const TYP & Wektor<TYP, ROZMIAR>::operator[] (int index) const
 {
   if (index < 0 || index >= ROZMIAR) {
-    cerr << "Index poza zakresem 5" << endl;
+    cerr << "Index poza zakresem" << endl;
     exit(1);
   }
   return tab[index];
@@ -43,7 +43,7 @@ template<class TYP,int ROZMIAR>
 TYP & Wektor<TYP, ROZMIAR>::operator[] (int index)
 {
   if (index < 0 || index >= ROZMIAR) {
-    cerr << "Index poza zakresem 5" << endl;
+    cerr << "Index poza zakresem" << endl;
     exit(1);
   }
   return tab[index];
